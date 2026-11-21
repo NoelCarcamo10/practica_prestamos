@@ -25,3 +25,9 @@
    Porque ocultar un botón es solo una regla visual de la interfaz; validar en Python garantiza la seguridad en el servidor ante llamadas por RPC/API, acciones masivas o sesiones simultáneas de dos usuarios.
 2. **¿Qué hace `prestamo.linea_ids.equipo_id.write(...)`? ¿Por qué no hace falta un `for` para cada equipo?**
    `prestamo.linea_ids.equipo_id` devuelve un *recordset* con todos los equipos asociados a las líneas del préstamo, y el método `.write()` de Odoo ORM actualiza en lote todos los registros del *recordset* en una sola consulta SQL.
+
+### Paso 5: Reglas del préstamo
+1. **El campo `equipo_id` ya filtra los equipos disponibles. ¿Por qué hace falta el TODO 5?**
+   Porque un préstamo puede quedar guardado en estado *Borrador* y mientras tanto el equipo puede ser prestado en otro registro o enviado a mantenimiento antes de pulsar *Prestar*.
+2. **¿En qué momento se ejecuta un método con `@api.constrains`? ¿Y la validación de `action_prestar`?**
+   `@api.constrains` se ejecuta automáticamente cada vez que se crea o modifica (`create`/`write`) alguno de los campos vigilados al guardar en base de datos; en cambio, `action_prestar` se ejecuta únicamente cuando el usuario pulsa el botón *Prestar*.
