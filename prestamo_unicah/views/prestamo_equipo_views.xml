@@ -36,6 +36,15 @@
         <field name="model">prestamo.equipo</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="action_enviar_mantenimiento" string="Enviar a mantenimiento"
+                            type="object" class="btn-secondary"
+                            invisible="estado == 'mantenimiento'"/>
+                    <button name="action_marcar_disponible" string="Marcar disponible"
+                            type="object" class="btn-primary"
+                            invisible="estado == 'disponible'"/>
+                    <field name="estado" widget="statusbar"/>
+                </header>
                 <sheet>
                     <group>
                         <group>
@@ -45,7 +54,6 @@
                         <group>
                             <field name="codigo"/>
                             <field name="categoria"/>
-                            <field name="estado"/>
                             <field name="active"/>
                         </group>
                     </group>
