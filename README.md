@@ -31,3 +31,9 @@
    Porque un préstamo puede quedar guardado en estado *Borrador* y mientras tanto el equipo puede ser prestado en otro registro o enviado a mantenimiento antes de pulsar *Prestar*.
 2. **¿En qué momento se ejecuta un método con `@api.constrains`? ¿Y la validación de `action_prestar`?**
    `@api.constrains` se ejecuta automáticamente cada vez que se crea o modifica (`create`/`write`) alguno de los campos vigilados al guardar en base de datos; en cambio, `action_prestar` se ejecuta únicamente cuando el usuario pulsa el botón *Prestar*.
+
+### Paso 6: Contacto, kanban y búsqueda
+1. **¿Qué pasa si arrastra una tarjeta del kanban a otra columna? ¿Por qué?**
+   El campo `estado` del equipo se actualiza automáticamente al valor de la columna destino porque el kanban está agrupado por `estado` (`default_group_by="estado"`), lo que hace que Odoo ejecute un `write({"estado": nuevo_valor})` al soltar la tarjeta.
+2. **El campo `prestamo_ids` se agregó a `res.partner`. ¿Se crea una columna nueva en la tabla de contactos? Explique.**
+   No. Un campo `One2many` es una relación inversa virtual; la llave foránea física (`partner_id`) vive únicamente en la tabla `prestamo_prestamo` de PostgreSQL.
